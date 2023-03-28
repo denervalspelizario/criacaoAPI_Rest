@@ -30,8 +30,57 @@ server.listen(3000) // nome da porta
 
 const cursos = ['Node JS', 'Javascript', 'React-Native' ]
 
+
+
+// o Midleware é todo tipo de requisição que esta entre o pedido da requisição e a resposta do front end
+// Funções de middleware podem executar as seguintes tarefas:
+// Executar qualquer código.
+// Fazer mudanças nos objetos de solicitação e resposta.
+// Encerrar o ciclo de solicitação-resposta.
+// Chamar a próxima função de middleware na pilha.
+
+// Midleware Global - ele age independente da rota 
+server.use((req, res, next) => { // recebe um req um res e um NeXT esse next para seguir o fluxo passa pelo midleware
+                                 // sem o next ele travaria as requisições e somente mostraria o console.log  
+                                 // com o next ele mostra o console.log e tb faz a requisição  
+  console.log(`REQUISIÇÃO CHAMADA: ${req.url}`);
+
+  return next();
+
+})
+
+
+function checkCurso(req, res, next){ // funcao que alerta erro que recebe o req, res e next
+
+  if(!req.body.name){ // se o nao tiver nome da propriedade ou seja o front end não enviou nome do curso
+
+    return res.status(400).json({error: "Nome do curso é obrigatorio"}) // retorna um erro 400 além de uma string
+
+  }
+
+  return next() 
+
+}
+
+function checkIndexCurso(req, res, next){
+  const curso = cursos[req.params.index];  // verificando se tem esse index e repassando para const
+
+  if(!curso){ // se nao tiver o curso
+
+    return res.status(400).json({error: "O usuário não existe"}) // retorna um erro 400 além de uma string
+
+  }
+
+  return next() // vaso existe o curso segue o fluxo da requisição
+
+}
+
+
+
+
 // buscar tipo GET
-server.get('/cursos', (req, res) => {  // ao acessar http://localhost:3000/cursos o resultado será ['Node JS', 'Javascript', 'React-Native' ]
+                      // adicionando funcao que verifica se existe o curso(checkIndexCurso) 
+server.get('/cursos', checkIndexCurso, (req, res) => {  // ao acessar http://localhost:3000/cursos o resultado será ['Node JS', 'Javascript', 'React-Native' ]
 
   return res.json(cursos)
 
@@ -51,8 +100,8 @@ server.get('/cursos/:index', (req, res) => {  // localhost:3000/curso/numerDoId
 
 
 // adicao de item POST
-
-server.post('/cursos', (req, res) => {  // criando um post (post cria/adiciona   get resgata/busca)
+                      // adicionando funcao que alerta de erro(checkCurso)
+server.post('/cursos', checkCurso, (req, res) => {  // criando um post (post cria/adiciona   get resgata/busca)
 
   const { name } = req.body; // name será o nome do objeto adicionado ao cursos
   
@@ -67,8 +116,8 @@ server.post('/cursos', (req, res) => {  // criando um post (post cria/adiciona  
 
 
 // atualizando um curso
-
-server.put('/cursos/:index', (req, res) => { // como vai acessar um item especifico precisa do id
+                            // adicionando funcao que alerta de erro(checkCurso)
+server.put('/cursos/:index', checkCurso, checkIndexCurso, (req, res) => { // como vai acessar um item especifico precisa do id
 
   const { index } = req.params;
   const { name } = req.body;
@@ -84,7 +133,7 @@ server.put('/cursos/:index', (req, res) => { // como vai acessar um item especif
 
 // Excluindo algum curso
 
-server.delete('/cursos/:index', (req, res) => { // 
+server.delete('/cursos/:index', checkIndexCurso,(req, res) => { // 
 
   const { index } = req.params;
 
