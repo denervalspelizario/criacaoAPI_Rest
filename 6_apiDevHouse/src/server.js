@@ -1,5 +1,5 @@
 
-const app = require('./app') // importando app.js
+import app  from './app' // importando app.js
 
 // aqui fica a parte de configuração do servidor
 

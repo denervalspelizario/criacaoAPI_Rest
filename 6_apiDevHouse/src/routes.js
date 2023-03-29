@@ -1,5 +1,5 @@
 
-const { Router } = require('express')
+import  { Router } from 'express'
 
 const routes = new Router();
 
@@ -9,4 +9,4 @@ routes.get('/', (req, res) => { // criando a rota que se inicia com /
 
 })
 
-module.exports = routes // exportando a routes
+export default routes // exportando a routes

@@ -4,13 +4,22 @@
 // comando para adicionar o express ao projeto yarn add express
 // depois criar pasta src, e adicionar app.js - routes.js - server.js ambos em pasta src
 
+// para instalar o nomemon e o sucrase juntos o comando é yarn add sucrase nodemon -D
+// * o sucrase é para ao invez de usar const  ... = require('./)  usar o import igual o react e react-native
 
-// apos criar para rodar o comando é node ./src/server.js vai ficar piscando então acesse localhost/3333
+// depois ir em package.json e embaixo de license "scripts": { "dev": "nodemon src/server.js"},
+
+// em seguida criar um aruivo chamado nodemon.js e adciona o comando { "execMap": { "js": "node -r sucrase/register" } } senao o sucrase não funciona
+
+// agora pra rodar basta digitar no console yarn dev
 
 
-const express = require('express') // importando o express
+// apos criar para rodar o comando é yarn sucrase-node ./src/server.js   - vai ficar piscando então acesse localhost/3333
 
-const routes = require('./routes') //importando as routes
+
+import express from 'express' // importando o express com sucrase
+
+import  routes from './routes' //importando as routes
 
 // aqui fica a parte dos middle e servidor
 class App{
@@ -34,7 +43,7 @@ class App{
 
 }
 
-module.exports = new App().server; // para poder exportar o sercer de app
+export default new App().server; // para poder exportar o sercer de app
 
 
 
