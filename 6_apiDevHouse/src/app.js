@@ -5,6 +5,9 @@
 // depois criar pasta src, e adicionar app.js - routes.js - server.js ambos em pasta src
 
 
+// apos criar para rodar o comando é node ./src/server.js vai ficar piscando então acesse localhost/3333
+
+
 const express = require('express') // importando o express
 
 const routes = require('./routes') //importando as routes
