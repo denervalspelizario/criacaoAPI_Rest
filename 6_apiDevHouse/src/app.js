@@ -1,5 +1,3 @@
-
-
 // comando para criar o package.json yarn init -y 
 // comando para adicionar o express ao projeto yarn add express
 // depois criar pasta src, e adicionar app.js - routes.js - server.js ambos em pasta src
@@ -13,19 +11,27 @@
 
 // agora pra rodar basta digitar no console yarn dev
 
-
 // apos criar para rodar o comando é yarn sucrase-node ./src/server.js   - vai ficar piscando então acesse localhost/3333
 
+// para instalar o mongodb o comando é yarn add mongoose
 
-import express from 'express' // importando o express com sucrase
 
-import  routes from './routes' //importando as routes
+import express from 'express'; // importando o express com sucrase
+import  routes from './routes'; //importando as routes
+import mongoose from 'mongoose'; 
+
 
 // aqui fica a parte dos middle e servidor
 class App{
 
   constructor(){
     this.server = express() // funcao que chama o express
+
+    // nunca esquecer de tirar o passwprd da url e adicionar o password o databse sempre nomeDoUser:senhaDoUser  e adicionar entre '/'  e '?retry' o nome do app no caso devhouse                          
+    mongoose.connect('mongodb+srv://devhouse:devhouse@cluster0.yyu6jpq.mongodb.net/devhouse?retryWrites=true&w=majority', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }) 
 
     this.middlewares() // precisa chamas as funcoes middlewares e routes para que elas funcionem assim que carregar o constructor
     this.routes()
