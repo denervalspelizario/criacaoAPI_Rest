@@ -28,7 +28,7 @@ class App{
     this.server = express() // funcao que chama o express
 
     // nunca esquecer de tirar o passwprd da url e adicionar o password o databse sempre nomeDoUser:senhaDoUser  e adicionar entre '/'  e '?retry' o nome do app no caso devhouse                          
-    mongoose.connect('mongodb+srv://devhouse:devhouse@cluster0.yyu6jpq.mongodb.net/devhouse?retryWrites=true&w=majority', {
+    mongoose.connect('mongodb+srv://devhouse:devhouse@devhouse.jgsclvp.mongodb.net/?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }) 
