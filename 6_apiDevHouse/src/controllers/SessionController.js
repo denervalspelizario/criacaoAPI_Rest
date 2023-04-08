@@ -16,6 +16,7 @@ class SessionController{
     
     const { email } = req.body; // acessandos somento o email da requisição  
 
+     //Verificando se esse usuario já existe
     let user = await User.findOne({ email })
 
     if(!user){
