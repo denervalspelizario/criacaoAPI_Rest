@@ -18,7 +18,8 @@
 
 import express from 'express'; // importando o express com sucrase
 import  routes from './routes'; //importando as routes
-import mongoose from 'mongoose'; 
+import mongoose from 'mongoose';
+import path from 'path';
 
 
 // aqui fica a parte dos middle e servidor
@@ -38,6 +39,11 @@ class App{
 
   }
   middlewares(){ // metodos dos middleware
+
+    this.server.use(
+      '/files',
+      express.static(path.resolve(__dirname,'..','uploads'))
+    );
 
     this.server.use(express.json()) // chamando o json no express 
   }

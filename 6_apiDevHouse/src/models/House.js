@@ -15,7 +15,16 @@ const HouseSchema = new Schema({ // Schema é a estrutura do usuario quais campo
     ref: 'User' // referenciando User o usuario
   }
   
-
+}, {
+  toJSON:{
+    virtuals: true // dizendo para usar esta variável virtual JUNTO com a requisição quando a gente fizer
+  }
 });
+
+HouseSchema.virtual('thumbnail_url').get(function(){
+  return `http://localhost:3333/files/${this.thumbnail}`;
+})
+
+
 
 export default model('House', HouseSchema) //exportando nome do model = User e o Schema do model que é o HouseSchema
